@@ -83,12 +83,6 @@ public class mainController {
 //        return new RedirectView("/", false);
     }
 
-    @GetMapping("/product.html")
-    public String getToProductPage() {
-        return "product";
-//        return new RedirectView("/", false);
-    }
-
     @GetMapping("/blog_list.html")
     public String getToBlogPage() {
         return "blog_list";
@@ -106,16 +100,18 @@ public class mainController {
         return "about";
 //        return new RedirectView("/", false);
     }
+    @GetMapping("/product.html")
+    public String getToProductPage(Model model) {
+        List<ElectronicDTO> allElectronicDTO = electronicService.getAllElectronic();
+        model.addAttribute("allElectronicDTOList", allElectronicDTO);
 
-    @GetMapping("/electronics.html")
-    public String getToElectronicsPage() {
-        return "electronics";
+        List<FashionDTO> allFashionDTO = fashionService.getAllFashion();
+        model.addAttribute("allFashionDTOList", allFashionDTO);
+
+        List<JewelleryDTO> allJewelleryDTO = jewelleryService.getAllJewellery();
+        model.addAttribute("allJewelleryDTOList", allJewelleryDTO);
+        return "product";
 //        return new RedirectView("/", false);
-    }
-
-    @GetMapping("/jewellery.html")
-    public String getToJewelleryPage() {
-        return "jewellery";
     }
 
     @GetMapping("/testimonial.html")

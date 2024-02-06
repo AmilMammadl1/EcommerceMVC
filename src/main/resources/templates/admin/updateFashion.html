@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Fashion</title>
+    <!-- Add your CSS links and styles here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h2>Update Fashion</h2>
+
+<form th:action="@{/admin/fashion}" method="post" th:object="${fashion}">
+    <!-- Add your form fields here, populated with the existing data -->
+    <!--  <label for="id">ID:</label>-->
+    <input type="hidden" id="id" name="id" th:field="*{id}" th:value="${fashion.id}" readonly="readonly"/>
+
+    <label for="brand">Brand:</label>
+    <input type="text" id="brand" name="brand" th:field="*{brand}"/>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" th:field="*{description}"></textarea>
+
+    <label for="price">Price:</label>
+    <input type="text" id="price" name="price" th:field="*{price}"/>
+
+    <label for="size">Size:</label>
+    <input type="text" id="size" name="size" th:field="*{size}"/>
+
+    <label for="color">Color:</label>
+    <input type="text" id="color" name="color" th:field="*{color}"/>
+
+    <label for="material">Material:</label>
+    <input type="text" id="material" name="material" th:field="*{material}"/>
+
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender" th:field="*{gender}">
+        <option th:each="g : ${T(com.example.EcommerceMVC.constant.GenderType).values()}"
+                th:value="${g}" th:text="${g}"></option>
+    </select>
+
+    <label for="fashionType">Fashion Type:</label>
+    <select id="fashionType" name="fashionType" th:field="*{fashionType}">
+        <option th:each="type : ${T(com.example.EcommerceMVC.constant.FashionType).values()}"
+                th:value="${type}" th:text="${type}"></option>
+    </select>
+
+    <label for="imageURL">Image URL:</label>
+    <input type="text" id="imageURL" name="imageURL" th:field="*{imageURL}"/>
+
+    <!-- Hidden input field to simulate PUT request -->
+    <input type="hidden" name="_method" value="PUT"/>
+
+    <button type="submit">Update</button>
+</form>
+
+<!-- Add your scripts and other content here if needed -->
+</body>
+</html>

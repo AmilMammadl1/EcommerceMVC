@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Electronic</title>
+    <!-- Add your CSS links and styles here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h2>Update Electronic</h2>
+
+<form th:action="@{/admin/electronics}" method="post" th:object="${electronic}">
+    <!-- Add your form fields here, populated with the existing data -->
+<!--    <label for="id">ID:</label>-->
+    <input type="hidden" id="id" name="id" th:value="${electronic.id}" th:field="*{id}" readonly="readonly" />
+
+    <label for="brand">Brand:</label>
+    <input type="text" id="brand" name="brand" th:value="${electronic.brand}" th:field="*{brand}"/>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" th:field="*{description}"
+              th:value="${electronic.description}"></textarea>
+
+
+    <label for="price">Price:</label>
+    <input type="text" id="price" name="price" th:field="*{price}" th:value="${electronic.price}"/>
+
+    <label for="model">Model:</label>
+    <input type="text" id="model" name="model" th:field="*{model}" th:value="${electronic.model}"/>
+
+    <label for="storageCapacityGB">Storage Capacity (GB):</label>
+    <input type="text" id="storageCapacityGB" name="storageCapacityGB" th:field="*{storageCapacityGB}"
+           th:value="${electronic.storageCapacityGB}"/>
+
+    <label for="ramSizeGB">RAM Size (GB):</label>
+    <input type="text" id="ramSizeGB" name="ramSizeGB" th:field="*{ramSizeGB}" th:value="${electronic.ramSizeGB}"/>
+
+    <label for="screenSizeInch">Screen Size (Inch):</label>
+    <input type="text" id="screenSizeInch" name="screenSizeInch" th:field="*{screenSizeInch}"
+           th:value="${electronic.screenSizeInch}"/>
+
+    <label for="electronicType">Electronic Type:</label>
+    <select id="electronicType" name="electronicType" th:field="*{electronicType}">
+        <option th:each="type : ${T(com.example.EcommerceMVC.constant.ElectronicType).values()}"
+                th:value="${type}" th:text="${type}"></option>
+    </select>
+
+
+    <label for="imageURL">Image URL:</label>
+    <input type="text" id="imageURL" name="imageURL" th:field="*{imageURL}" th:value="${electronic.imageURL}"/>
+
+    <input type="hidden" name="_method" value="PUT" />
+
+    <button type="submit">Update</button>
+</form>
+
+<!-- Add your scripts and other content here if needed -->
+</body>
+</html>

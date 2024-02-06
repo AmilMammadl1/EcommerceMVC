@@ -24,6 +24,12 @@ public class JewelleryController {
         model.addAttribute("allJewelleryDTOList", allJewelleryDTO);
         return "index";
     }
+    @GetMapping("/jewellery.html")
+    public String getToJewelleryPage(Model model) {
+        List<JewelleryDTO> allJewelleryDTO = jewelleryService.getAllJewellery();
+        model.addAttribute("allJewelleryDTOList", allJewelleryDTO);
+        return "jewellery";
+    }
 
     @GetMapping("/jewellery/{id}")
     public JewelleryDTO getJewellertyById(@PathVariable Integer id, Model model) {

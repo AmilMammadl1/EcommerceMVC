@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="searchContainer">
+    <button onclick="showCategories()">Search</button>
+
+    <div id="categoryOptions2" style="display: none;">
+        <button onclick="selectCategory('/admin/create/fashion')">Fashion</button>
+        <button onclick="selectCategory('/admin/create/jewellery')">Jewellery</button>
+        <button onclick="selectCategory('/admin/create/electronics')">Electronic</button>
+    </div>
+
+    <div>
+        <label for="brandName">Brand Name:</label>
+        <input type="text" id="brandName" name="brandName">
+        <button onclick="searchTable()">Search</button>
+    </div>
+    <script>
+        function showCategories() {
+            let categoryOptions = document.querySelector('#categoryOptions2');
+            categoryOptions.style.display = 'block';
+        }
+
+        function selectCategory(category) {
+            window.location.href = category + '.html';
+        }
+
+        function searchTable() {
+            let selectedCategory = document.querySelector('#categoryOptions2 button.selected');
+            if (selectedCategory) {
+                let brandName = document.querySelector('#brandName').value;
+                let category = selectedCategory.textContent.toLowerCase();
+
+                // Redirect to the appropriate search URL based on category and brandName
+                window.location.href = `/admin/search/${category}?brandName=${brandName}`;
+            } else {
+                alert('Please select a category first.');
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

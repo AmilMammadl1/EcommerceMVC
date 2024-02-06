@@ -22,6 +22,13 @@ public class ElectronicController {
         model.addAttribute("allElectronicDTOList", allElectronicDTO);
         return "index";
     }
+    @GetMapping("/electronics.html")
+    public String getToElectronicsPage(Model model) {
+        List<ElectronicDTO> allElectronicDTO = electronicService.getAllElectronic();
+        model.addAttribute("allElectronicDTOList", allElectronicDTO);
+        return "electronics";
+//        return new RedirectView("/", false);
+    }
 
     @GetMapping("/electronics/{id}")
     public ElectronicDTO getElectronicById(@PathVariable Integer id, Model model) {

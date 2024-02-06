@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<!--<div class="row" th:each="product : ${allFashionDTOList}">-->
+<!--  <div class="col-sm-6 col-md-4 col-lg-4">-->
+<!--    <div class="box">-->
+<!--      <div class="option_container">-->
+<!--        <div class="options">-->
+<!--          <a th:href="'/addToCart/' + ${product.id}" class="option1">-->
+<!--            Add To Cart-->
+<!--          </a>-->
+<!--          <a th:href="'/buyNow/' + ${product.id}" class="option2">-->
+<!--            Buy Now-->
+<!--          </a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="img-box">-->
+<!--        &lt;!&ndash; Update the image source to use Thymeleaf expression &ndash;&gt;-->
+<!--        <img th:src="@{'/main-web-static/images/' + ${product.imageURL}}" alt="">-->
+<!--      </div>-->
+<!--      <div class="detail-box">-->
+<!--        <h5 th:text="${product.name}">-->
+<!--          &lt;!&ndash; Default text if name is null or empty &ndash;&gt;-->
+<!--          Default Product Name-->
+<!--        </h5>-->
+<!--        <h6 th:text="'$' + ${product.price}">-->
+<!--          &lt;!&ndash; Default text if price is null &ndash;&gt;-->
+<!--          $0-->
+<!--        </h6>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<tr th:each="user, userStatus: ${allFashionDTOList}">
+
+    <!--these are th:each thymeleaf attribute status variable properties -->
+<!--            <td th:text="${userStatus.current}">Oranges</td>-->
+<!--            <td th:text="${userStatus.even}">Oranges</td>-->
+<!--            <td th:text="${userStatus.first}">Oranges</td>-->
+<!--            <td th:text="${userStatus.index}">Oranges</td>-->
+<!--            <td th:text="${userStatus.last}">Oranges</td>-->
+<!--            <td th:text="${userStatus.odd}">Oranges</td>-->
+            <td th:text="${userStatus.size}">Oranges</td>
+
+    <td th:text="${user.imageURL}">Oranges</td>
+    <img th:src="@{${user.imageURL}}" alt="Oranges">
+
+
+</tr>
+
+</body>
+</html>

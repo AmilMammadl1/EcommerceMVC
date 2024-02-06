@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" th:href="@{/main-web-static/images/favicon.png}" type="">
+    <title>Famms - Electronics HTML Template</title>
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/main-web-static/css/bootstrap.css}" />
+    <!-- font awesome style -->
+    <link th:href="@{/main-web-static/css/font-awesome.min.css}" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link th:href="@{/main-web-static/css/style.css}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link th:href="@{/main-web-static/css/responsive.css}" rel="stylesheet" />
+    <style>
+        .product_section .container {
+            display: flex;
+            flex-wrap: wrap;
+            /*justify-content: space-between;*/
+        }
+
+        /*.product_section .box {*/
+        /*    !*width: calc(33.33% - 20px); !* Adjust the width as needed *!*!*/
+        /*    !*margin-bottom: 20px;*!*/
+        /*}*/
+    </style>
+</head>
+<body class="sub_page">
+<div class="hero_area">
+    <!-- header section strats -->
+    <div th:replace="~{/header :: header}"></div>
+    <!-- end header section -->
+</div>
+<!-- inner page section -->
+<section class="inner_page_head">
+    <div class="container_fuild">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="full">
+                    <h3>Product Grid</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end inner page section -->
+<!-- product section -->
+<section class="product_section layout_padding">
+    <div class="container">
+
+        <div class="row" style="width: 33%" th:each="product : ${allElectronicDTOList}">
+            <div style="width: 100%;">
+                <div class="box">
+                    <div class="option_container">
+                        <div class="options">
+                            <a th:href="'/addToCart/' + ${product.id}" class="option1">
+                                Add To Cart
+                            </a>
+                            <a th:href="'/buyNow/' + ${product.id}" class="option2">
+                                Buy Now
+                            </a>
+                        </div>
+                    </div>
+                    <div class="img-box">
+                        <img th:src="@{${product.imageURL}}" alt="Image Description">
+                    </div>
+                    <div class="detail-box">
+                        <h5 th:text="${product.brand}">
+                            <!-- Default text if the brand is null or empty -->
+                            Default Product Name
+                        </h5>
+                        <h6 th:text="'$' + ${product.price}">
+                            <!-- Default text if the price is null -->
+                            $0
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- end product section -->
+<!-- footer section -->
+<div th:replace="~{/footer :: footer}"></div>
+<!-- footer section -->
+<!-- jQery -->
+<script th:src="@{/main-web-static/js/jquery-3.4.1.min.js}"></script>
+<!-- popper js -->
+<script th:src="@{/main-web-static/js/popper.min.js}"></script>
+<!-- bootstrap js -->
+<script th:src="@{/main-web-static/js/bootstrap.js}"></script>
+<!-- custom js -->
+<script th:src="@{/main-web-static/js/custom.js}"></script>
+</body>
+</html>

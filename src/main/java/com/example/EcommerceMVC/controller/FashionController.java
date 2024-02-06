@@ -31,6 +31,7 @@ public class FashionController {
         return "index";
     }
 
+
     @GetMapping("/fashion/{id}")
     public FashionDTO getFashionById(@PathVariable Integer id, Model model) {
         FashionDTO fashionDTO = fashionService.getFashionById(id);

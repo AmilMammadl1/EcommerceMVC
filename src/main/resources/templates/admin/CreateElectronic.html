@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Electronic</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<h2>Create Electronic</h2>
+
+<form
+        role="form"
+        method="post"
+        th:action="@{/admin/electronics}"
+        th:object="${electronicForm}"
+>
+    <label for="brand">Brand:</label>
+    <input type="text" id="brand" name="brand" th:field="*{brand}" />
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" th:field="*{description}" ></textarea>
+
+    <label for="price">Price:</label>
+    <input type="text" id="price" name="price" th:field="*{price}" />
+
+    <label for="model">Model:</label>
+    <input type="text" id="model" name="model" th:field="*{model}" />
+
+    <label for="storageCapacityGB">Storage Capacity (GB):</label>
+    <input type="text" id="storageCapacityGB" name="storageCapacityGB" th:field="*{storageCapacityGB}" />
+
+    <label for="ramSizeGB">RAM Size (GB):</label>
+    <input type="text" id="ramSizeGB" name="ramSizeGB" th:field="*{ramSizeGB}" />
+
+    <label for="screenSizeInch">Screen Size (Inch):</label>
+    <input type="text" id="screenSizeInch" name="screenSizeInch" th:field="*{screenSizeInch}" />
+
+    <label for="electronicType">Electronic Type:</label>
+    <select id="electronicType" name="electronicType" th:field="*{electronicType}">
+        <option value="LAPTOP">Laptop</option>
+        <option value="PC">PC</option>
+        <option value="PHONE">Phone</option>
+    </select>
+
+    <label for="imageURL">Image URL:</label>
+    <input type="text" id="imageURL" name="imageURL" th:field="*{imageURL}" />
+
+    <button type="submit">Create Electronic</button>
+
+    <a th:href="@{/admin}" class="admin-button">
+        <button type="button">Go to Admin Page</button>
+    </a>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Jewellery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</head>
+<body>
+<h2>Create Jewellery</h2>
+
+<form action="/admin/jewellery" method="post" th:object="${jewelleryForm}">
+    <label for="brand">Brand:</label>
+    <input type="text" id="brand" name="brand" th:field="*{brand}" />
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" th:field="*{description}"></textarea>
+
+    <label for="price">Price:</label>
+    <input type="text" id="price" name="price" th:field="*{price}" />
+
+    <label for="material">Material:</label>
+    <input type="text" id="material" name="material" th:field="*{material}" />
+
+    <label for="jewelleryType">Jewellery Type:</label>
+    <select id="jewelleryType" name="jewelleryType" th:field="*{jewelleryType}">
+        <option value="NECKLACE">Necklace</option>
+        <option value="BRACELET">Bracelet</option>
+        <option value="RINGS">Rings</option>
+        <option value="EARRINGS">Earrings</option>
+    </select>
+    <label for="imageURL">Image URL:</label>
+    <input type="text" id="imageURL" name="imageURL" th:field="*{imageURL}" />
+
+    <button type="submit">Create Jewellery</button>
+    <a th:href="@{/admin}" class="admin-button">
+        <button type="button">Go to Admin Page</button>
+    </a>
+</form>
+</body>
+</body>
+</html>
