@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Entity
 public class Jewellery {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String brand;
     private String description;

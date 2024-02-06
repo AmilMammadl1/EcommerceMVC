@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -48,20 +49,29 @@ public class JewelleryServiceImpl implements JewelleryService {
 
     @Override
     public JewelleryDTO updateJewellery(JewelleryDTO jewelleryDTO) {
-        Jewellery jewellery = jewelleryRepository.findById(jewelleryDTO.getId()).get();
-        jewellery.setBrand(jewelleryDTO.getBrand());
-        jewellery.setJewelleryType(jewelleryDTO.getJewelleryType());
-        jewellery.setMaterial(jewelleryDTO.getMaterial());
-        jewellery.setDescription(jewelleryDTO.getDescription());
-        jewellery.setPrice(jewelleryDTO.getPrice());
-        jewellery.setImageURL(jewellery.getImageURL());
+        Jewellery map = modelMapper.map(jewelleryDTO, Jewellery.class);
+        Optional<Jewellery> jewelleryOptional = jewelleryRepository.findById(map.getId());
 
-        Jewellery jewelleryUpdated = jewelleryRepository.save(jewellery);
-        JewelleryDTO jewelleryDTOUpdated = modelMapper.map(jewelleryUpdated, JewelleryDTO.class);
+        if (jewelleryOptional.isPresent()) {
+            Jewellery jewellery = jewelleryOptional.get();
+            jewellery.setBrand(jewelleryDTO.getBrand());
+            jewellery.setJewelleryType(jewelleryDTO.getJewelleryType());
+            jewellery.setMaterial(jewelleryDTO.getMaterial());
+            jewellery.setDescription(jewelleryDTO.getDescription());
+            jewellery.setPrice(jewelleryDTO.getPrice());
+            jewellery.setImageURL(jewelleryDTO.getImageURL());
 
-        return jewelleryDTOUpdated;
+            Jewellery jewelleryUpdated = jewelleryRepository.save(jewellery);
+            JewelleryDTO jewelleryDTOUpdated = modelMapper.map(jewelleryUpdated, JewelleryDTO.class);
 
+            return jewelleryDTOUpdated;
+        } else {
+            // Handle the case where Jewellery with given ID doesn't exist
+            // You can throw an exception, log an error, or return a specific response
+            throw new NoSuchElementException("Jewellery with ID " + jewelleryDTO.getId() + " not found");
+        }
     }
+
 
     @Override
     public void deleteJewellery(Integer jewelleryId) {

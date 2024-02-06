@@ -1,5 +1,6 @@
 package com.example.EcommerceMVC.controller;
 
+import com.example.EcommerceMVC.dto.ElectronicDTO;
 import com.example.EcommerceMVC.dto.FashionDTO;
 import com.example.EcommerceMVC.dto.JewelleryDTO;
 import com.example.EcommerceMVC.entity.Jewellery;
@@ -18,29 +19,48 @@ public class JewelleryController {
     private JewelleryService jewelleryService;
 
     @GetMapping("/jewellery")
-    public List<JewelleryDTO> getAllJewellerty(Model model){
+    public String getAllJewellerty(Model model) {
         List<JewelleryDTO> allJewelleryDTO = jewelleryService.getAllJewellery();
-        model.addAttribute("allJewelleryDTOList",allJewelleryDTO);
-        return allJewelleryDTO;
+        model.addAttribute("allJewelleryDTOList", allJewelleryDTO);
+        return "index";
     }
+
     @GetMapping("/jewellery/{id}")
-    public JewelleryDTO getJewellertyById(@PathVariable Integer id, Model model){
+    public JewelleryDTO getJewellertyById(@PathVariable Integer id, Model model) {
         JewelleryDTO jewelleryDTO = jewelleryService.getJewelleryById(id);
-        model.addAttribute("jewelleryDTO",jewelleryDTO);
+        model.addAttribute("jewelleryDTO", jewelleryDTO);
         return jewelleryDTO;
     }
+
+    @GetMapping("/admin/create/jewellery.html")
+    public String jewelleryCreatePage(Model model) {
+        JewelleryDTO jewelleryDTO = new JewelleryDTO();
+        model.addAttribute("jewelleryForm", jewelleryDTO);
+
+        return "admin/CreateJewellery";
+    }
+    @GetMapping("/admin/update/jewellery/{id}")
+    public String showUpdateForm(@PathVariable Integer id, Model model) {
+        JewelleryDTO jewelleryDTOById = jewelleryService.getJewelleryById(id);
+        model.addAttribute("jewellery", jewelleryDTOById);
+        return "admin/updateJewellery"; // Thymeleaf template name
+    }
+
     @PostMapping("/admin/jewellery")
-    public JewelleryDTO createJewellerty(@RequestBody JewelleryDTO jewelleryDTO){
+    public String createJewellerty(@ModelAttribute("jewelleryForm") JewelleryDTO jewelleryDTO) {
         JewelleryDTO jewelleryDTOCreated = jewelleryService.createJewellery(jewelleryDTO);
-        return jewelleryDTOCreated;
+        return "redirect:/admin"; // Redirect to the "/admin" mapping in AdminController
     }
+
     @PutMapping("/admin/jewellery")
-    public JewelleryDTO updateJewellery(@RequestBody JewelleryDTO jewelleryDTO) {
+    public String updateJewellery(@ModelAttribute("jewellery") JewelleryDTO jewelleryDTO) {
         JewelleryDTO jewelleryUpdated = jewelleryService.updateJewellery(jewelleryDTO);
-        return jewelleryUpdated;
+        return "redirect:/admin"; // Redirect to the home page or any other appropriate page
     }
+
     @DeleteMapping("/admin/jewellery/{id}")
-    public void deleteJewelleryById(@PathVariable Integer id) {
+    public String deleteJewelleryById(@PathVariable Integer id) {
         jewelleryService.deleteJewellery(id);
+        return "redirect:/admin"; // Redirect to the home page or any other appropriate page
     }
 }

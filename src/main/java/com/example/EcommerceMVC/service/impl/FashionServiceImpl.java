@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -46,21 +47,31 @@ public class FashionServiceImpl implements FashionService {
 
     @Override
     public FashionDTO updateFashion(FashionDTO fashionDTO) {
-        Fashion fashion = fashionRepository.findById(fashionDTO.getId()).get();
-        fashion.setFashionType(fashionDTO.getFashionType());
-        fashion.setBrand(fashionDTO.getBrand());
-        fashion.setDescription(fashionDTO.getDescription());
-        fashion.setMaterial(fashionDTO.getMaterial());
-        fashion.setColor(fashionDTO.getColor());
-        fashion.setGender(fashionDTO.getGender());
-        fashion.setPrice(fashionDTO.getPrice());
-        fashion.setSize(fashionDTO.getSize());
-        fashion.setImageURL(fashionDTO.getImageURL());
+        Fashion fashion = modelMapper.map(fashionDTO, Fashion.class);
+        Optional<Fashion> fashionOptional = fashionRepository.findById(fashion.getId());
 
-        Fashion fashionUpdated = fashionRepository.save(fashion);
-        FashionDTO fashionDTOUpdated = modelMapper.map(fashionUpdated, FashionDTO.class);
-        return fashionDTOUpdated;
+        if (fashionOptional.isPresent()) {
+            Fashion fashionExisting = fashionOptional.get();
+            fashionExisting.setFashionType(fashionDTO.getFashionType());
+            fashionExisting.setBrand(fashionDTO.getBrand());
+            fashionExisting.setDescription(fashionDTO.getDescription());
+            fashionExisting.setMaterial(fashionDTO.getMaterial());
+            fashionExisting.setColor(fashionDTO.getColor());
+            fashionExisting.setGender(fashionDTO.getGender());
+            fashionExisting.setPrice(fashionDTO.getPrice());
+            fashionExisting.setSize(fashionDTO.getSize());
+            fashionExisting.setImageURL(fashionDTO.getImageURL());
+
+            Fashion fashionUpdated = fashionRepository.save(fashionExisting);
+            FashionDTO fashionDTOUpdated = modelMapper.map(fashionUpdated, FashionDTO.class);
+            return fashionDTOUpdated;
+        } else {
+            // Handle the case where Fashion with given ID doesn't exist
+            // You can throw an exception, log an error, or return a specific response
+            throw new NoSuchElementException("Fashion with ID " + fashionDTO.getId() + " not found");
+        }
     }
+
 
     @Override
     public void deleteFashion(Integer fashionId) {

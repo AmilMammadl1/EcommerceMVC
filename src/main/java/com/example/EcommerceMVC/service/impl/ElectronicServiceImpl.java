@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -40,29 +41,37 @@ public class ElectronicServiceImpl implements ElectronicService {
     public List<ElectronicDTO> getAllElectronic() {
         List<Electronic> allElectronic = electronicRepository.findAll();
         List<ElectronicDTO> allElectronicDto = allElectronic.stream()
-                .map(electronic -> modelMapper.map(allElectronic, ElectronicDTO.class))
+                .map(electronic -> modelMapper.map(electronic, ElectronicDTO.class))
                 .collect(Collectors.toList());
 
         return allElectronicDto;
     }
-
     @Override
     public ElectronicDTO updateElectronic(ElectronicDTO electronicDTO) {
-        Electronic electronicExisting = electronicRepository.findById(electronicDTO.getId()).get();
-        electronicExisting.setElectronicType(electronicDTO.getElectronicType());
-        electronicExisting.setDescription(electronicDTO.getDescription());
-        electronicExisting.setBrand(electronicDTO.getBrand());
-        electronicExisting.setPrice(electronicDTO.getPrice());
-        electronicExisting.setModel(electronicDTO.getModel());
-        electronicExisting.setRamSizeGB(electronicDTO.getRamSizeGB());
-        electronicExisting.setScreenSizeInch(electronicDTO.getScreenSizeInch());
-        electronicExisting.setStorageCapacityGB(electronicDTO.getStorageCapacityGB());
-        electronicExisting.setImageURL(electronicDTO.getImageURL());
+        Electronic electronic = modelMapper.map(electronicDTO, Electronic.class);
+        Optional<Electronic> electronicOptional = electronicRepository.findById(electronic.getId());
 
-        Electronic electronicSaved = electronicRepository.save(electronicExisting);
-        ElectronicDTO electronicDTOSaved = modelMapper.map(electronicSaved, ElectronicDTO.class);
+        if (electronicOptional.isPresent()) {
+            Electronic electronicExisting = electronicOptional.get();
+            electronicExisting.setElectronicType(electronicDTO.getElectronicType());
+            electronicExisting.setDescription(electronicDTO.getDescription());
+            electronicExisting.setBrand(electronicDTO.getBrand());
+            electronicExisting.setPrice(electronicDTO.getPrice());
+            electronicExisting.setModel(electronicDTO.getModel());
+            electronicExisting.setRamSizeGB(electronicDTO.getRamSizeGB());
+            electronicExisting.setScreenSizeInch(electronicDTO.getScreenSizeInch());
+            electronicExisting.setStorageCapacityGB(electronicDTO.getStorageCapacityGB());
+            electronicExisting.setImageURL(electronicDTO.getImageURL());
 
-        return electronicDTOSaved;
+            Electronic electronicSaved = electronicRepository.save(electronicExisting);
+            ElectronicDTO electronicDTOSaved = modelMapper.map(electronicSaved, ElectronicDTO.class);
+
+            return electronicDTOSaved;
+        } else {
+            // Handle the case where Electronic with given ID doesn't exist
+            // You can throw an exception, log an error, or return a specific response
+            throw new NoSuchElementException("Electronic with ID " + electronicDTO.getId() + " not found");
+        }
     }
 
     @Override
