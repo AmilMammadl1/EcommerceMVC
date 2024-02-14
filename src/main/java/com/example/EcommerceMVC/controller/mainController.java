@@ -119,16 +119,6 @@ public class mainController {
         return "testimonial";
     }
 
-    @GetMapping("/login.html")
-    public String getToLoginPage() {
-        return "login";
-    }
-
-    @GetMapping("/register.html")
-    public String getToRegisterPage() {
-        return "register";
-    }
-
 
     //    @GetMapping("/admin")
 //    public String adminPage() {
