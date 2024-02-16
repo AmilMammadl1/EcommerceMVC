@@ -94,6 +94,11 @@
             font-size: 14px;
             cursor: pointer;
         }
+        #goToUsersButton {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+        }
     </style>
     <script>
         function refreshPage() {
@@ -106,6 +111,18 @@
 <div>
     <button onclick="toggleCategories()" class="btn btn-success">Create</button>
     <button onclick="refreshPage()" class="btn btn-primary">Refresh Page</button>
+    <button id="goToUsersButton" class="btn btn-secondary" onclick="goToUsers()">Go to Users</button>
+
+    <!-- ... your existing body content ... -->
+
+    <script>
+        // Function to navigate to /admin/users
+        function goToUsers() {
+            window.location.href = '/admin/users';
+        }
+
+        // ... your existing scripts ...
+    </script>
 
 
     <div id="categoryOptions" th:style="${#strings.isEmpty(categoryOptions) ? 'display: none;' : ''}">

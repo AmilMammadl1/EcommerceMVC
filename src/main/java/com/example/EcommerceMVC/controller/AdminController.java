@@ -3,9 +3,11 @@ package com.example.EcommerceMVC.controller;
 import com.example.EcommerceMVC.dto.ElectronicDTO;
 import com.example.EcommerceMVC.dto.FashionDTO;
 import com.example.EcommerceMVC.dto.JewelleryDTO;
+import com.example.EcommerceMVC.dto.UserDTO;
 import com.example.EcommerceMVC.service.ElectronicService;
 import com.example.EcommerceMVC.service.FashionService;
 import com.example.EcommerceMVC.service.JewelleryService;
+import com.example.EcommerceMVC.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,8 @@ import java.util.List;
 
 @Controller
 public class AdminController {
+    @Autowired
+    private UserService userService;
     @Autowired
     private ElectronicService electronicService;
     @Autowired
@@ -38,5 +42,11 @@ public class AdminController {
 
         // Return the name of the Thymeleaf template for the admin panel
         return "admin/indexAdmin";
+    }
+    @GetMapping("/admin/users")
+    public String users(Model model){
+        List<UserDTO> allUser = userService.findAllUser();
+        model.addAttribute("userDTOList",allUser);
+        return "admin/users";
     }
 }

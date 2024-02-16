@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,6 +33,30 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Arrays.asList(role));
         userRepository.save(user);
     }
+
+    @Override
+    public User findByUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<UserDTO> findAllUser() {
+        List<User> all = userRepository.findAll();
+        return all.stream()
+                .map(user -> mapToUserDto(user))
+                .collect(Collectors.toList());
+
+    }
+    private UserDTO mapToUserDto(User user){
+        UserDTO userDTO = new UserDTO();
+        String[] s = user.getName().split(" ");
+        userDTO.setFirstName(s[0]);
+        userDTO.setLastName(s[1]);
+        userDTO.setEmail(user.getEmail());
+        return userDTO;
+    }
+
+
     private Role checkRoleExist(){
         Role role = new Role();
         role.setName("ROLE_USER");
