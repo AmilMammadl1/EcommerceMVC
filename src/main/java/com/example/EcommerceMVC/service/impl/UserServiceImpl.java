@@ -8,6 +8,7 @@ import com.example.EcommerceMVC.repository.UserRepository;
 import com.example.EcommerceMVC.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -19,17 +20,20 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
     private RoleRepository roleRepository;
     @Override
     public void saveUser(UserDTO userDTO) {
         User user = new User();
         user.setName(userDTO.getFirstName()+" "+userDTO.getLastName());
         user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         Role role = roleRepository.findByName("ROLE_USER");
         if(role==null){
             role = checkRoleExist();
         }
+        user.setRegistered(true);
         user.setRoles(Arrays.asList(role));
         userRepository.save(user);
     }
@@ -53,6 +57,8 @@ public class UserServiceImpl implements UserService {
         userDTO.setFirstName(s[0]);
         userDTO.setLastName(s[1]);
         userDTO.setEmail(user.getEmail());
+//        userDTO.setRegistered(user.get);
+        userDTO.setRegistered(user.isRegistered());
         return userDTO;
     }
 
