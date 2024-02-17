@@ -20,6 +20,5 @@ public class UserDTO {
     private String email;
     @NotEmpty(message = "Please Add Password")
     private String password;
-    private boolean registered;
 
 }

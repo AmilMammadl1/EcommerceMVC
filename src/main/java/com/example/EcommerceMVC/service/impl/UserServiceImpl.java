@@ -33,7 +33,6 @@ public class UserServiceImpl implements UserService {
         if(role==null){
             role = checkRoleExist();
         }
-        user.setRegistered(true);
         user.setRoles(Arrays.asList(role));
         userRepository.save(user);
     }
@@ -57,8 +56,6 @@ public class UserServiceImpl implements UserService {
         userDTO.setFirstName(s[0]);
         userDTO.setLastName(s[1]);
         userDTO.setEmail(user.getEmail());
-//        userDTO.setRegistered(user.get);
-        userDTO.setRegistered(user.isRegistered());
         return userDTO;
     }
 

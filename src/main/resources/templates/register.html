@@ -17,11 +17,15 @@
       <div class="card-header">
           <h2 class="text-center">Registration</h2>
       </div>
-      <div th:if="${param.success}">
-          <div class="alert alert-info">
-            You have successfully registered our app!
-          </div>
+      <!-- Display validation errors if present -->
+      <div th:if="${#fields.hasErrors('user')}">
+        <div class="alert alert-danger">
+          <ul>
+            <li th:each="error : ${#fields.errors('user')}" th:text="${error}"></li>
+          </ul>
+        </div>
       </div>
+
       <div class="card-body">
           <form
             method="post"
